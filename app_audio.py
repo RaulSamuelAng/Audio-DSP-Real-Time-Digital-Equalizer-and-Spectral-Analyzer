@@ -9,7 +9,7 @@ st.set_page_config(page_title="Procesamiento de Audio DSP", page_icon="🎵", la
 st.title("🎵 Ecualizador Digital y Analizador de Frecuencias (DSP)")
 st.markdown("Herramienta para cargar archivos `.wav`, aplicar filtros digitales en tiempo real y analizar el espectro.")
 
-# 1. FUNCIÓN DE FILTRADO (Lógica pura de Teleco)
+# 1. FUNCIÓN DE FILTRADO
 def aplicar_filtro(datos, fs, tipo_filtro, f_corte, orden=5):
     # Nyquist
     nyq = 0.5 * fs
@@ -19,12 +19,12 @@ def aplicar_filtro(datos, fs, tipo_filtro, f_corte, orden=5):
     if f_normalizada >= 1.0:
         f_normalizada = 0.99
         
-    # Diseñamos el filtro Butterworth digital (b, a son los coeficientes de la función de transferencia)
+    # Se diseña el filtro Butterworth digital (b, a son los coeficientes de la función de transferencia)
     b, a = signal.butter(orden, f_normalizada, btype=tipo_filtro, analog=False)
     
-    # Aplicamos el filtro a los datos de audio
+    # Se aplica el filtro a los datos de audio
     datos_filtrados = signal.lfilter(b, a, datos)
-    return np.int16(datos_filtrados) # Devolvemos en formato de 16 bits para el WAV
+    return np.int16(datos_filtrados) # Se devuelve en formato de 16 bits para el WAV
 
 # 2. INTERFAZ WEB
 st.sidebar.header("🎛️ Configuración del Filtro")
